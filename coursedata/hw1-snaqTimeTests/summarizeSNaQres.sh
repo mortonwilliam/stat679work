@@ -37,8 +37,10 @@
 
 #done
 
+echo 'Filename, Hmax, CPU Time, main seed'
 for filename in out/*.out
 do
+
   echo "my filename is $filename"
   myfirstline=$(echo "${filename}" | # shows file names
                 grep -o -E "[^/]+$" | #gives filename from / to end
@@ -48,10 +50,12 @@ do
   mythirdline=$(grep -E -o 'hmax = [0-9]+' log/${myfirstline}.log |
                 head -n 1 | # hmax appears ~10 times in the file
                 grep -E -o '\d+') # to get rid of hmax at the begining
-  echo 'Filename, Hmax, CPU Time'
-  echo "$myfirstline, $mythirdline, $mysecondline"  >> morton.hw1.csv
-done
 
-#ummm I dont really want to make a mistake
+  #Seed=$(grep -E -o 'main seed' log/${myfirstline}.log | grep -E -o '\d+')
+  #Seed= $(grep -E -o 'seed' ${myfirstline} | head -n 1 | cut -f3 -d "")
+
+  echo 'Filename, Hmax, CPU Time, main seed'
+  echo "$myfirstline, $mythirdline, $mysecondline, $Seed"  >> morton.hw1.csv
+done
 
 #echo "$myfirstnumber, $mysecondnumber, $mythirdnumber" >> csv
